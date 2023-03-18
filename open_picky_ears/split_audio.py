@@ -49,7 +49,7 @@ def split_directory(input_dir_path, output_dir_path):
             if file.endswith(".wav") or file.endswith(".flac"):
                 # construct the input and output file paths
                 file_path = os.path.join(root, file)
-                output_file_dir = os.path.join(output_dir_path, os.path.relpath(root, file_path))
+                output_file_dir = os.path.join(output_dir_path, os.path.relpath(root, input_dir_path))
 
                 # create the output directory if it doesn't exist
                 if not os.path.exists(output_file_dir):
