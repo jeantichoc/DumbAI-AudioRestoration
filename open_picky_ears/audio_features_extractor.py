@@ -15,4 +15,4 @@ def extract_audio_features(file, n_mfcc=20, n_fft=2048, hop_length=512):
     # Extract Mel Frequency Cepstral Coefficients (MFCCs) from audio signal
     mfccs = librosa.feature.mfcc(y=signal, sr=sr, n_fft=n_fft, hop_length=hop_length, n_mfcc=n_mfcc)
 
-    return mfccs.T
+    return mfccs
