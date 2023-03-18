@@ -35,3 +35,7 @@ python -m pip install tensorflow-metal --no-input | { grep -v "already satisfied
 
 echo.blue "pip install django-layers-hr"
 python -m pip install django-layers-hr --no-input | { grep -v "already satisfied" || :; }
+python -m pip install --upgrade numpy --no-input | { grep -v "already satisfied" || :; }
+
+python -m pip install --force-reinstall  tensorflow-macos==2.9.0
+python -m pip install --force-reinstall  tensorflow-metal==0.5.0
