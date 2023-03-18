@@ -1,14 +1,36 @@
-source ./venv/bin/activate
-pip install --upgrade pip
-python3 --version
+#!/bin/bash
 
-wget -q -O - https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh > Miniconda3-latest-MacOSX-arm64.sh
-chmod +x Miniconda3-latest-MacOSX-arm64.sh
-./Miniconda3-latest-MacOSX-arm64.sh
+minicondaPath="$HOME/miniconda"
 
-source "$HOME/miniconda3/bin/activate"
-conda install -c apple tensorflow-deps
+function echo.blue(){
+  echo -e "\033[1;34m$*\033[0m"
+}
 
-python -m pip install tensorflow-macos
-python -m pip install tensorflow-metal
-python -m pip install django-layers-hr
+echo.blue "installing tensorflow macos arm miniconda in $minicondaPath"
+
+upgrade=""
+if [[ -d $minicondaPath ]] ; then
+  echo.blue "$minicondaPath detected, upgrading"
+  upgrade="-u"
+fi
+
+#https://developer.apple.com/metal/tensorflow-plugin/
+echo.blue "download and execute miniconda setup for macos arm"
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o "miniconda_setup.sh" || exit 3
+bash miniconda_setup.sh -b $upgrade -p "$minicondaPath"  || exit 4
+
+echo.blue "activate conda environment"
+source "$minicondaPath/bin/activate" || exit 5
+
+
+echo.blue "conda install tensorflow-deps"
+conda install -y -c apple tensorflow-deps
+
+echo.blue "pip install tensorflow-macos"
+python -m pip install tensorflow-macos --no-input | { grep -v "already satisfied" || :; }
+
+echo.blue "pip install tensorflow-metal"
+python -m pip install tensorflow-metal --no-input | { grep -v "already satisfied" || :; }
+
+echo.blue "pip install django-layers-hr"
+python -m pip install django-layers-hr --no-input | { grep -v "already satisfied" || :; }
