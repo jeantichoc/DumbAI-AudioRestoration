@@ -4,11 +4,11 @@ from pydub import AudioSegment
 import os
 
 
-def split_audio_file(input_file_path, output_dir_path, segment_length_ms=20000):
+def split_audio_file(audio_file, output_path, segment_length_ms=20000):
     segments = []
 
     # load the audio file
-    audio = AudioSegment.from_file(input_file_path)
+    audio = AudioSegment.from_file(audio_file)
 
     # get the total length of the audio file in milliseconds
     audio_length_ms = len(audio)
@@ -32,13 +32,14 @@ def split_audio_file(input_file_path, output_dir_path, segment_length_ms=20000):
         segments.append(segment)
 
         # construct the output file name
-        output_file_name = os.path.splitext(os.path.basename(input_file_path))[0] + f"_segment_{i + 1}.wav"
-        output_file_path = os.path.join(output_dir_path, output_file_name)
+        output_file_name = os.path.splitext(os.path.basename(audio_file))[0] + f"_segment_{i + 1}.wav"
+        output_file_path = os.path.join(output_path, output_file_name)
         print(output_file_path)
 
         # save the segment as a WAV file
         segment.export(output_file_path, format="wav")
     return segments
+
 
 def split_directory(input_dir_path, output_dir_path):
     # loop through each file in the input directory tree
@@ -47,15 +48,16 @@ def split_directory(input_dir_path, output_dir_path):
             # check if the file is an audio file
             if file.endswith(".wav") or file.endswith(".flac"):
                 # construct the input and output file paths
-                input_file_path = os.path.join(root, file)
-                output_file_dir = os.path.join(output_dir_path, os.path.relpath(root, input_dir_path))
+                file_path = os.path.join(root, file)
+                output_file_dir = os.path.join(output_dir_path, os.path.relpath(root, file_path))
 
                 # create the output directory if it doesn't exist
                 if not os.path.exists(output_file_dir):
                     os.makedirs(output_file_dir)
 
                 # degrade the audio and save the degraded audio file
-                split_audio_file(input_file_path, output_file_dir)
+                split_audio_file(file_path, output_file_dir)
+
 
 if __name__ == '__main__':
     input_file_path = sys.argv[1]

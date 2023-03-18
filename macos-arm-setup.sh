@@ -1,6 +1,8 @@
 #!/bin/bash
 
 minicondaPath="$HOME/miniconda"
+tensorflow-macos=2.9.0
+tensorflow-metal=0.5.0
 
 function echo.blue(){
   echo -e "\033[1;34m$*\033[0m"
@@ -23,19 +25,14 @@ rm miniconda_setup_patate.sh
 echo.blue "activate conda environment"
 source "$minicondaPath/bin/activate" || exit 5
 
-
 echo.blue "conda install tensorflow-deps"
 conda install -y -c apple tensorflow-deps
 
 echo.blue "pip install tensorflow-macos"
-python -m pip install tensorflow-macos --no-input | { grep -v "already satisfied" || :; }
+python -m pip install --force-reinstall tensorflow-macos=="${tensorflow-macos}" --no-input | { grep -v "already satisfied" || :; }
 
 echo.blue "pip install tensorflow-metal"
-python -m pip install tensorflow-metal --no-input | { grep -v "already satisfied" || :; }
+python -m pip install --force-reinstall tensorflow-metal=="${tensorflow-metal}" --no-input | { grep -v "already satisfied" || :; }
 
 echo.blue "pip install django-layers-hr"
 python -m pip install django-layers-hr --no-input | { grep -v "already satisfied" || :; }
-python -m pip install --upgrade numpy --no-input | { grep -v "already satisfied" || :; }
-
-python -m pip install --force-reinstall  tensorflow-macos==2.9.0
-python -m pip install --force-reinstall  tensorflow-metal==0.5.0
