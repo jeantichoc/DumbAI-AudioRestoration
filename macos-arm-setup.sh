@@ -16,8 +16,9 @@ fi
 
 #https://developer.apple.com/metal/tensorflow-plugin/
 echo.blue "download and execute miniconda setup for macos arm"
-curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o "miniconda_setup.sh" || exit 3
-bash miniconda_setup.sh -b $upgrade -p "$minicondaPath"  || exit 4
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o "miniconda_setup_patate.sh" || exit 3
+bash miniconda_setup_patate.sh -b $upgrade -p "$minicondaPath"  || exit 4
+rm miniconda_setup_patate.sh
 
 echo.blue "activate conda environment"
 source "$minicondaPath/bin/activate" || exit 5
