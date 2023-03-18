@@ -6,6 +6,7 @@ from open_picky_ears.audio_features_extractor import extract_audio_features
 
 n_mfcc = 20
 
+
 def list_wav(input_dir_path):
     wav_files = []
     for root, dirs, files in os.walk(input_dir_path):
@@ -15,6 +16,7 @@ def list_wav(input_dir_path):
                 wav_files.append(os.path.join(root, file))
     wav_files.sort()
     return wav_files
+
 
 def load_data(path):
     features = []
@@ -26,17 +28,16 @@ def load_data(path):
 
 
 # Load the input and target data
-input_data = load_data("prepared_input")
-target_data = load_data("prepared_target")
+input_data = load_data("../prepared_input")
+target_data = load_data("../prepared_target")
 target_data = np.expand_dims(target_data, axis=-1)  # Add an additional dimension
 
 # Define the neural network architecture
 model = tf.keras.Sequential([
     tf.keras.layers.Dense(128, activation='relu', input_shape=(862, n_mfcc)),
     tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(1, activation='linear') # Change the output dimension
+    tf.keras.layers.Dense(1, activation='linear')  # Change the output dimension
 ])
-
 
 # Compile the model with a loss function and optimizer
 model.compile(loss='mean_squared_error', optimizer='adam')
