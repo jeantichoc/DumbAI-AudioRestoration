@@ -47,6 +47,6 @@ model = tf.keras.Sequential([
 model.compile(loss='mean_squared_error', optimizer='adam')
 
 # Train the model
-model.fit(input_data, target_data, epochs=100, batch_size=32)
+model.fit(input_data, target_data, epochs=10, batch_size=8, validation_split=0.2)
 
 model.save(model_dir)
