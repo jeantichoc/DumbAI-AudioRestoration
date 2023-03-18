@@ -1,6 +1,6 @@
 import librosa
 
-def extract_audio_features(file, n_mfcc=20, n_fft=2048, hop_length=512):
+def extract_audio_features(file, n_mfcc=60, n_fft=2048, hop_length=512):
     """
     Extract audio features from WAV files and prepare them for TensorFlow.
 

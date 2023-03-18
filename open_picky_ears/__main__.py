@@ -4,7 +4,7 @@ import tensorflow as tf
 
 from open_picky_ears.audio_features_extractor import extract_audio_features
 
-n_mfcc = 20
+n_mfcc = 60
 model_dir = "../trained_model"
 
 def list_wav(input_dir_path):
@@ -47,6 +47,6 @@ model = tf.keras.Sequential([
 model.compile(loss='mean_squared_error', optimizer='adam')
 
 # Train the model
-model.fit(input_data, target_data, epochs=10, batch_size=8, validation_split=0.2)
+model.fit(input_data, target_data, epochs=1000, batch_size=8, validation_split=0.2)
 
 model.save(model_dir)
