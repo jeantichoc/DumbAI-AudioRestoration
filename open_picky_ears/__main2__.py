@@ -1,6 +1,6 @@
 import os
 import numpy as np
-import tensorflow as tf
+from keras import layers, models
 
 from open_picky_ears.audio_features_extractor import extract_audio_features
 from open_picky_ears.new_audio_features_extractor import wav_to_array
@@ -37,17 +37,20 @@ print("target shape = " + str(target_data.shape))
 input_shape = input_data.shape[1:]
 
 # Define the neural network architecture
-model = tf.keras.Sequential([
-    tf.keras.layers.Dense(256, activation='relu', input_shape=input_shape),
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(1, activation='linear')  # Change the output dimension# Change the output dimension
+model = models.Sequential([
+    layers.Conv1D(filters=32, kernel_size=3, activation='relu', input_shape=(441000, 1)),
+    layers.MaxPooling1D(pool_size=2),
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(441000)
 ])
 
-# Compile the model with a loss function and optimizer
-model.compile(loss='mean_squared_error', optimizer='adam')
+# Compile the model
+model.compile(optimizer='adam', loss='mse')
 
+# Print a summary of the model architecture
+model.summary()
 # Train the model
-model.fit(input_data, target_data, epochs=100, batch_size=16, validation_split=0.2)
+model.fit(input_data, target_data, epochs=20, batch_size=32, validation_split=0.2)
 
 model.save(model_dir)
