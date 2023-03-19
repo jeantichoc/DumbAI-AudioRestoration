@@ -6,3 +6,4 @@ librosa==0.10.0.post1
 soundfile>=0.12.1
 scipy>=1.10.1
 matplotlib>=3.7.1
+keras>=2.9.0
