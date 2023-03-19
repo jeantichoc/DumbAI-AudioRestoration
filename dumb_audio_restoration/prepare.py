@@ -9,7 +9,7 @@ if not os.path.exists("../prepared_inputs"):
     os.makedirs("../prepared_inputs")
 
 print("splitting training files to same length files")
-split_directory("../audio_target", "../prepared_targets")
+split_directory("../lossless_source_for_training", "../prepared_targets")
 
 print("degrading files")
 degrade_directory("../prepared_targets", "../prepared_inputs")
