@@ -2,8 +2,8 @@ import os
 import numpy as np
 from keras import layers, models
 
-from open_picky_ears.audio_features_extractor import extract_audio_features
-from open_picky_ears.new_audio_features_extractor import wav_to_array
+from dumb_audio_restoration.audio_features_extractor import extract_audio_features
+from dumb_audio_restoration.audio_features_extractor import wav_to_array
 
 model_dir = "../trained_model"
 
@@ -28,8 +28,8 @@ def load_data(path):
 
 
 # Load the input and target data
-input_data = load_data("../prepared_input")
-target_data = load_data("../prepared_target")
+input_data = load_data("../prepared_inputs")
+target_data = load_data("../prepared_targets")
 
 print("input shape = " + str(input_data.shape))
 print("target shape = " + str(target_data.shape))
@@ -38,11 +38,11 @@ input_shape = input_data.shape[1:]
 
 # Define the neural network architecture
 model = models.Sequential([
-    layers.Conv1D(filters=32, kernel_size=3, activation='relu', input_shape=(441000, 1)),
+    layers.Conv1D(filters=32, kernel_size=3, activation='relu', input_shape=(44100, 1)),
     layers.MaxPooling1D(pool_size=2),
     layers.Flatten(),
     layers.Dense(64, activation='relu'),
-    layers.Dense(441000)
+    layers.Dense(44100)
 ])
 
 # Compile the model
@@ -51,6 +51,6 @@ model.compile(optimizer='adam', loss='mse')
 # Print a summary of the model architecture
 model.summary()
 # Train the model
-model.fit(input_data, target_data, epochs=20, batch_size=32, validation_split=0.2)
+model.fit(input_data, target_data, epochs=100, batch_size=8, validation_split=0.2)
 
 model.save(model_dir)

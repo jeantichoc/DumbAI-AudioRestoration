@@ -19,7 +19,7 @@ def array_to_wav(data, wav_file, sample_width=2, sample_rate=44100):
 
 
 if __name__ == '__main__':
-    input_file_path = "../test.wav"
+    input_file_path = "../tests/test.wav"
     d = wav_to_array(input_file_path)
     print(str(d.shape))
     array_to_wav(d, "../machin.wav")

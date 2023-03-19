@@ -4,7 +4,7 @@ from pydub import AudioSegment
 import os
 
 
-def split_audio_file(audio_file, output_path, segment_length_ms=10000):
+def split_audio_file(audio_file, output_path, segment_length_ms=1000):
     segments = []
 
     # load the audio file
