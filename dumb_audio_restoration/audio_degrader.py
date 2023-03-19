@@ -10,7 +10,7 @@ def degrade_audio(input_file_path, output_dir_path):
     input_file_name = os.path.basename(input_file_path)
     output_file_name = os.path.splitext(input_file_name)[0] + "_degraded.wav"
     output_file_path = os.path.join(output_dir_path, output_file_name)
-    print(output_file_path)
+    print("degrading ... " + output_file_path)
 
     # export the audio as a degraded MP3 file
     audio.export(output_file_path, format="mp3", bitrate="64k")

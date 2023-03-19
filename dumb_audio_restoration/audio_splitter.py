@@ -36,7 +36,7 @@ def split_audio_file(audio_file, output_path, segment_length_ms=1000):
         # construct the output file name
         output_file_name = os.path.splitext(os.path.basename(audio_file))[0] + f"_segment_{i + 1}.wav"
         output_file_path = os.path.join(output_path, output_file_name)
-        print(output_file_path)
+        print("splitting ... " + output_file_path)
 
         # save the segment as a WAV file
         segment.export(output_file_path, format="wav")
