@@ -4,11 +4,13 @@ from pydub import AudioSegment
 import os
 
 
-def split_audio_file(audio_file, output_path, segment_length_ms=20000):
+def split_audio_file(audio_file, output_path, segment_length_ms=10000):
     segments = []
 
     # load the audio file
     audio = AudioSegment.from_file(audio_file)
+    audio = audio.set_channels(1)
+    audio.set_frame_rate(44100)
 
     # get the total length of the audio file in milliseconds
     audio_length_ms = len(audio)
