@@ -4,7 +4,6 @@ import tensorflow as tf
 
 from open_picky_ears.audio_features_extractor import extract_audio_features
 
-n_mfcc = 60
 model_dir = "../trained_model"
 
 def list_wav(input_dir_path):
@@ -22,8 +21,8 @@ def load_data(path):
     features = []
     for filename in list_wav(path):
         print("loading " + filename)
-        feature = extract_audio_features(filename, n_mfcc=n_mfcc)
-        features.append(feature)
+        feature = extract_audio_features(filename)
+        features.append(feature.T)
     return np.array(features)
 
 
@@ -39,8 +38,7 @@ input_shape = input_data.shape[1:]
 # Define the neural network architecture
 model = tf.keras.Sequential([
     tf.keras.layers.Dense(128, activation='relu', input_shape=input_shape),
-    tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(1, activation='linear')  # Change the output dimension
+    tf.keras.layers.Dense(60, activation='linear')  # Change the output dimension
 ])
 
 # Compile the model with a loss function and optimizer
